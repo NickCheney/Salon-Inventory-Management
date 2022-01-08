@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&family=Rosarivo:ital@0;1&display=swap');
+
+#banner {
+	background-color: black;
+	padding: 20px;
+}
+
+#banner2 {
+	border-style: solid;
+	border-width: 7.5px;
+	border-color: white;
+	padding: 15px;
+}
+
+head, body, h1, h2, h3, h4, h5, button {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-family: 'Aleo', serif;
+	color: white;
+	font-size: 75px;
+	font-weight:700;
+	letter-spacing: 0.15em;
+	line-height: 1.1;
+}
+
+h2 {
+	font-family: 'Rosarivo', serif;
+	color: white;
+	font-size: 35px;
+	font-weight:lighter;
+	font-style:italic;
+}
+
+h3 {
+	font-family: 'Aleo', serif;
+	text-align: center;
+	margin-top: 5px;
+}
+
+h4, h5 {
+	font-family: 'Aleo', serif;
+	font-style: lighter;
+}
+
+table, th, td {
+	border: 2px solid black;
+	border-collapse: collapse;
+}
+
+.header {
+	font-size: 225%;
+	display: inline-block;
+}
+
+.header .item-on, .header .item-off {
+	padding: 10px;
+	float: left;
+}
+
+.header .item-on {
+	color: black;
+}
+
+.header .item-on:hover {
+	background-color: grey;
+}
+
+.header .item-off {
+	background-color: black;
+	color:white;
+}
+
+.header .item-off:hover {
+	background-color: grey;
+}
+
+.message {
+	font-size: 200%;
+	padding: 10px;
+}
+
+.confirm {
+	font-size: 200%;
+	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-gap: 5px;
+	padding: 5px;
+	justify-items: stretch;
+}
+
+.prod-wrap {
+	display: grid;
+	grid-template-columns: 1fr 2fr 0.1fr;
+	grid-gap: 30px;
+	padding: 5px;
+	font-size: 200%;
+}
+
+.prod-wrap h3 {
+	text-align: left;
+}
+
+.prod-wrap h2 {
+	font-style: normal;
+	font-weight: normal;
+	color: black;
+	font-size: 75%;
+}
+
+.prod-wrap .product {
+	border: 5px solid black;
+}
+  
+.box {
+	padding: 20px;
+	font-size: 150%;
+	color: rgb(75, 75, 75);
+}
+
+.prod-cont {
+	font-size: 150%;
+	display: inline-grid;
+	grid-template-rows: 6fr 1fr;
+}
+
+.box:hover {
+	background-color: lightgrey;
+	color: black;
+}
+.product {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.plus {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.icon {
+	width: 30px;
+	height: 100%;
+	filter:sepia(200%);
+}
+
+button {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+}
+.text-input {
+	border:none;
+
+}
+.text-input tr td {
+	padding: 10px;
+	border: none;
+}
+
+.text-input * {
+	vertical-align: top;
+}
+
+input, textarea {
+	font-size: 15px;
+	font-family: 'Aleo',serif;
+}
+
+.home {
+	color: white;
+	background-color: black;
+	display: inline-block;
+	border: 2px solid black;
+	margin: 5px;
+	padding: 10px;
+	font-size: 125%;
+	cursor: pointer;
+}
+
+.home:hover {
+	color: black;
+	background-color: white;
+}
+
+.confirm div .home {
+	font-size: 100%;
+}
+
+.cancel {
+	color: white;
+	background-color: black;
+	display: inline-block;
+	margin: 5px;
+	padding: 10px;
+	font-size: 75%;
+}
+
+.cancel:hover {
+	background-color: red;
+}
+
+.complete {
+	color: white;
+	background-color: black;
+	display: inline-block;
+	margin: 5px;
+	padding: 10px;
+	font-size: 75%;
+	cursor: pointer;
+	border: none;
+	font-weight:700;
+}
+
+.complete:hover {
+	background-color: green;
+}
+
+#del-con .complete {
+	font-size: 100%
+}
+
+#del-con .complete:hover {
+	background-color: red;
+}
+
+
