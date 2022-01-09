@@ -49,6 +49,7 @@ if ($_POST['data']) {
 				<img class='icon' src='resources/images/edit.png' />
 			</button>
 		</form>
+		<br/>
 		<form method='post' action='deleteConfirm.php'>
 			<input type='hidden' name='data' value='".serialize($data)."' />
 			<button>

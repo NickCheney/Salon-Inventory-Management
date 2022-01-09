@@ -99,7 +99,7 @@ table, th, td {
 
 .prod-wrap {
 	display: grid;
-	grid-template-columns: 1fr 2fr 0.1fr;
+	grid-template-columns: 1fr 2fr 0.2fr;
 	grid-gap: 30px;
 	padding: 5px;
 	font-size: 200%;
@@ -147,7 +147,7 @@ table, th, td {
 }
 
 .icon {
-	width: 30px;
+	width: 60px;
 	height: 100%;
 	filter:sepia(200%);
 }
