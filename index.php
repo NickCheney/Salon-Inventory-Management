@@ -50,6 +50,7 @@ else {
 						<img class='product' src='".$prod_image_path."'/>
 						</div>
 						<div>
+						<br>
 			     		<h4>".$row["name"]."</h4>";
 						if ($row['size']) {
 			     		 echo "<h5>".$row['size']."</h5>";

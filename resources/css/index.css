@@ -150,7 +150,7 @@ table, th, td {
 .prod-cont {
 	font-size: 150%;
 	display: inline-grid;
-	grid-template-rows: 6fr 1fr;
+	grid-template-rows: auto;
 }
 
 .box:hover {
