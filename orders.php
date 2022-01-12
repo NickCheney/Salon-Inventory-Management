@@ -24,7 +24,50 @@
 <a class='item-on' href='orders.php'>
 		<h3>Orders</h3>
 </a>
+<a class='item-off' href='sales.php'>
+		<h3>Sales</h3>
+</a>
 </div>
+
+<?php 
+$dbh = new PDO('mysql:host=localhost;dbname=inventory', 'nick', 'Fringe2022!');
+$rows = $dbh->query("select * from order_");
+if ($rows->rowCount() == 0)
+	echo "<p>No orders to show...</p>";
+else {
+	echo "<div class='order-wrapper'>
+    <div class='order-header'>
+    <span></span>
+    <span><h4>Order #</h4></span>
+    <span><h4>Date</h4></span>
+    <span><h4>Time</h4></span>
+    </div>";
+	foreach($rows as $row) {
+        $date = explode(" ",$row['dt'])[0];
+        $time = explode(" ",$row['dt'])[1];
+		echo "<div class='order-box'>
+                <span>
+                <img class='icon' src='./resources/images/drop-arrow2.png' style='transform: rotate(270deg); width: 30px;'/>
+                </span>
+                <span>
+                <h5>".$row['ID']."</h5>
+                </span>
+                <span>
+                <h5>".$date."</h5>
+                </span>
+                <span>
+                <h5>".$time."</h5>
+                </span>
+			</div>
+		     ";
+	}
+	unset($row);
+    echo "</div>";
+}
+
+$dbh = null;
+
+?>
 
 </body>
 </html>

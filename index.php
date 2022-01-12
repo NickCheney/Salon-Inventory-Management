@@ -24,6 +24,9 @@
 <a class='item-off' href='orders.php'>
 		<h3>Orders</h3>
 </a>
+<a class='item-off' href='sales.php'>
+		<h3>Sales</h3>
+</a>
 </div>
 
 <?php 

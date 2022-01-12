@@ -51,8 +51,10 @@ table, th, td {
 }
 
 .header {
-	font-size: 225%;
+	font-size: 200%;
 	display: inline-block;
+	background-color: black;
+	width: 100%;
 }
 
 .header .item-on, .header .item-off {
@@ -61,15 +63,11 @@ table, th, td {
 }
 
 .header .item-on {
+	background-color: white;
 	color: black;
 }
 
-.header .item-on:hover {
-	background-color: grey;
-}
-
 .header .item-off {
-	background-color: black;
 	color:white;
 }
 
@@ -89,12 +87,35 @@ table, th, td {
 	grid-template-columns: 1fr 1fr;
 }
 
+.order-wrapper {
+	display: grid;
+	grid-gap: 2px;
+	justify-items: stretch;
+	font-size: 200%;
+	margin-top: 1%;
+	background-color: black;
+}
+
 .wrapper {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 5px;
 	padding: 5px;
 	justify-items: stretch;
+}
+
+.order-header {
+	padding: 5px;
+	display: grid;
+	grid-template-columns: 0.5fr 1fr 1fr 1fr;
+	background-color: white;
+}
+
+.order-box {
+	padding: 15px;
+	background-color: lightgrey;
+	display: grid;
+	grid-template-columns: 0.5fr 1fr 1fr 1fr;
 }
 
 .prod-wrap {
@@ -147,9 +168,9 @@ table, th, td {
 }
 
 .icon {
-	width: 60px;
-	height: 100%;
-	filter:sepia(200%);
+	width: 50px;
+	max-height: 100%;
+	background-color: none;
 }
 
 button {
