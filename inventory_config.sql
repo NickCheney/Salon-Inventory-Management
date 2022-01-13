@@ -2,6 +2,14 @@ drop database inventory;
 create database inventory;
 use inventory;
 
+
+create table user_ (
+	ID int not null AUTO_INCREMENT,
+	username varchar(30) not null,
+	password varchar(70) not null,
+	primary key(ID)
+);
+
 create table item (
 	ID int not null AUTO_INCREMENT,
 	name varchar(50) not null,
@@ -28,6 +36,9 @@ create table includes (
 	foreign key (O_ID) references order_ (ID) on delete cascade
 );
 
+insert into user_ values
+	(null,'VictoriaZingman', SHA2('Fringe2022!',224)),
+	(null,'NickCheney', SHA2('Fringe2022!',224));
 
 insert into item values 
 	(null,"Hair spray 1","Spray for hair","300 mL","default-product.jpg"), 
