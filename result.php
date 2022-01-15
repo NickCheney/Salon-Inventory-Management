@@ -1,3 +1,16 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: index.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +22,7 @@
 </head>
 <body>
 
-<a href="./index.php">
+<a href="./products.php">
     <div id="banner">
 	    <div id="banner2">
 		    <h1>FRINGE HAIR SALON</h1>
@@ -44,7 +57,7 @@
             echo $sql . "<br>" . $e->getMessage();
         }
         $dbh=null;
-        echo "</div><a href='index.php'><div class='home'>
+        echo "</div><a href='products.php'><div class='home'>
         <h4>Ok</h4></div></a>";
     } else {
         echo "<h4>Please include product name.</h4></div>
@@ -65,7 +78,7 @@
             echo $sql . "<br>" . $e->getMessage();
         }
         $dbh=null;
-        echo "</div><a href='index.php'><div class='home'>
+        echo "</div><a href='products.php'><div class='home'>
         <h4>Ok</h4></div></a>";
     } else {
         if ($_POST['prod-name']) {
@@ -95,7 +108,7 @@
                 echo $sql . "<br>" . $e->getMessage();
             }
             $dbh=null;
-            echo "</div><a href='index.php'><div class='home'>
+            echo "</div><a href='products.php'><div class='home'>
             <h4>Ok</h4></div></a>";
         } else {
             echo "<h4>Please include product name.</h4></div>

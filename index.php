@@ -1,3 +1,92 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: products.php");
+    exit;
+}
+ 
+// Include config file
+require_once "config.php";
+ 
+// Define variables and initialize with empty values
+$username = $password = "";
+$username_err = $password_err = $login_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Check if username is empty
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["username"]);
+    }
+    
+    // Check if password is empty
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    // Validate credentials
+    if(empty($username_err) && empty($password_err)){
+        // Prepare a select statement
+        $sql = "SELECT * FROM user_ WHERE username = :username";
+        
+        if($stmt = $pdo->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+            
+            // Set parameters
+            $param_username = trim($_POST["username"]);
+            
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Check if username exists, if yes then verify password
+                if($stmt->rowCount() == 1){
+                    if($row = $stmt->fetch()){
+                        $id = $row["ID"];
+                        $username = $row["username"];
+                        $hashed_password = $row["password"];
+						$hashed_input_password = hash('sha224',$password);
+                        if($hashed_password == $hashed_input_password){
+                            // Password is correct, so start a new session
+                            session_start();
+                            
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;                            
+                            
+                            // Redirect user to welcome page
+                            header("location: products.php");
+                        } else{
+                            // Password is not valid, display a generic error message
+                            $login_err = "Invalid username or password.";
+                        }
+                    }
+                } else{
+                    // Username doesn't exist, display a generic error message
+                    $login_err = "Invalid username or password.";
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            unset($stmt);
+        }
+    }
+    
+    // Close connection
+    unset($pdo);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +97,7 @@
 	<link rel="stylesheet" href="./resources/css/index.css">
 </head>
 <body>
-<a href="./index.php">
+<a href=''>
 <div id="banner">
 	<div id="banner2">
 		<h1>FRINGE HAIR SALON</h1>
@@ -17,75 +106,38 @@
 </div>
 </a>
 
-<div class='header'>
-	<a class='item-on' href="index.php">
-		<h3>Products</h3>
-</a>
-<a class='item-off' href='orders.php'>
-		<h3>Orders</h3>
-</a>
-<a class='item-off' href='sales.php'>
-		<h3>Sales</h3>
-</a>
+<div class="login-wrapper">
+	<h3 style='font-size: 200%;'>Login</h3>
+	<br/>
+
+	<?php 
+	if(!empty($login_err)){
+		echo '<span>' . $login_err . '</span>';
+	}        
+	?>
+
+	<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">	
+		<div>
+			<input type="text" name="username" value="<?php echo $username; ?>" placeholder="Username">
+            <?php 
+            if (!empty($username_err)) {
+                echo '<span>'.$username_err.'</span>';
+            }
+            ?>
+		</div>    
+		<div>
+			<input type="password" name="password" placeholder="Password">
+            <?php 
+            if (!empty($password_err)) {
+                echo '<span>'.$password_err.'</span>';
+            }
+            ?>
+		</div>
+		<div>
+			<input type="submit" value="Login">
+		</div>
+	</form>
 </div>
-
-<?php 
-$dbh = new PDO('mysql:host=localhost;dbname=inventory', 'nick', 'Fringe2022!');
-#$dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-$rows = $dbh->query("select * from item order by name");
-if ($rows->rowCount() == 0)
-	echo "<p>No products to show...</p>";
-
-else {
-
-	echo '<div class="wrapper">';
-	foreach($rows as $row) {
-		$prod_image_path = './resources/images/'.$row['img_url'];
-		echo "<div class='box'>
-				 <form method='post' action='./product.php'>
-					<input type='hidden' name='data' value='".serialize($row)."' />
-					<button>
-						<div class='prod-cont'>
-						<div>	
-						<img class='product' src='".$prod_image_path."'/>
-						</div>
-						<div>
-						<br>
-			     		<h4>".$row["name"]."</h4>";
-						if ($row['size']) {
-			     		 echo "<h5>".$row['size']."</h5>";
-						} else {
-							echo "<h5>-</h5>";
-						}
-						echo "
-						</div>
-						</div>
-					</button>
-				 </form>
-				 </div>
-		     ";
-	}
-	unset($row);
-
-	echo "<a href='newProduct.php'><div class='box'><button>
-			<div class='prod-cont'>
-			<div>
-			<img class='plus' src='./resources/images/plus-icon3.png'>
-			</div>
-			<div>
-			<h4>Add Product</h4>
-			<h5>&nbsp;</h5>
-			</div>
-			</div>
-			</button></div>
-			</a>
-		</div>";
-}
-
-$dbh = null;
-
-?>
-
 
 </body>
 </html>

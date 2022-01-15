@@ -1,3 +1,16 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: index.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +21,7 @@
 	<link rel="stylesheet" href="./resources/css/index.css">
 </head>
 <body>
-<a href="./index.php">
+<a href="./products.php">
 <div id="banner">
 	<div id="banner2">
 		<h1>FRINGE HAIR SALON</h1>
@@ -18,7 +31,7 @@
 </a>
 
 <div class='header'>
-	<a class='item-off' href="index.php">
+	<a class='item-off' href="products.php">
 		<h3>Products</h3>
 </a>
 <a class='item-off' href='orders.php'>
