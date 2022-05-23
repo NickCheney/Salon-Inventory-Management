@@ -9,6 +9,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
     exit;
 }
+
+// Include config file
+require_once "config.php";
 ?>
 
 <!DOCTYPE html>
@@ -32,26 +35,36 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <?php 
 if ($_POST['data']) {
 	$data = unserialize($_POST['data']);
-	try {
-		$dbh = new PDO('mysql:host=localhost;dbname=inventory', 'nick', 'Fringe2022!');
-		$sql = "select sum(Quantity) as pq from includes where I_ID = ".$data['ID'];
-		$rows = $dbh->query($sql);
-	} catch (PDOException $e) {
-		echo $sql . "<br>" . $e->getMessage();
-	}
-	$pq = $rows->fetch()['pq'];
-	if ($pq == null)
-		$pq=0;
+	$in_stock = 0;
+	$sql = "select b - s as ist from (select sum(quantity) as b from buys where I_ID = " .
+			":ID group by I_ID) as bt,  (select sum(quantity) as s from sells where I_ID" .
+			" = :ID group by I_ID) as sd";
 
-	$dbh=null;
+	if($stmt = $pdo->prepare($sql)){
+		// Bind variables to the prepared statement as parameters
+		$stmt->bindParam(":ID", $prod_id, PDO::PARAM_STR);
+		$prod_id = $data['ID'];
+		if($stmt->execute()){
+			if($stmt->rowCount() == 1){
+				if($row = $stmt->fetch()){
+					if (isset($row['ist'])){
+						$in_stock = $row['ist'];
+					}
+				}
+			}
+		}
+		unset($stmt);
+	}
+	$pdo = null;
 	echo "<div class='prod-wrap'>
 	<div>
 		<img class='product' src='./resources/images/".$data['img_url']."'>
 	</div>
 	<div>
-		<h3>".$data['name']."</h3>
+		<h3>".$data['brand']." ".$data['name']."</h3>
 		<h4>".$data['size']."</h4>
-		<h4>Total Ordered: ".$pq."</h4>
+		<h4>$".$data['price']."</h4>
+		<h4>".$in_stock." in stock</h4>
 		<br/>
 		<h2>".$data['description']."</h2>
 	</div>

@@ -9,6 +9,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
     exit;
 }
+
+// Include config file
+require_once "config.php";
 ?>
 
 
@@ -41,66 +44,71 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <a class='item-off' href='sales.php'>
 		<h3>Sales</h3>
 </a>
+<div id='user-info'>
+	<div>
+		<img style='width: 25px;' src='resources/images/user-icon2.png'/>
+		<h2>
+		<?php 
+		session_start();
+		echo htmlspecialchars($_SESSION['username']);
+		?>
+		</h2>
+	</div>
+
+	<div>
+	<a href='logout.php' style='float: right;'>
+		<h5 style='color:white;'>Log out</h5>
+	</a>
+	</div>
 </div>
 
-<?php 
-$dbh = new PDO('mysql:host=localhost;dbname=inventory', 'nick', 'Fringe2022!');
-#$dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-$rows = $dbh->query("select * from item order by name");
-if ($rows->rowCount() == 0)
-	echo "<p>No products to show...</p>";
+</div>
+<div class="wrapper">
 
-else {
+<a href='newProduct.php'>
+	<button class='add'>
+	<div class='prod-img' style='background-image: url(./resources/images/plus-icon3.png);'></div>
+	</button>
+</a>
 
-	echo '<div class="wrapper">';
-	foreach($rows as $row) {
-		$prod_image_path = './resources/images/'.$row['img_url'];
-		echo "<div class='box'>
-				 <form method='post' action='./product.php'>
-					<input type='hidden' name='data' value='".serialize($row)."' />
-					<button>
-						<div class='prod-cont'>
-						<div>	
-						<img class='product' src='".$prod_image_path."'/>
-						</div>
-						<div>
-						<br>
-			     		<h4>".$row["name"]."</h4>";
-						if ($row['size']) {
-			     		 echo "<h5>".$row['size']."</h5>";
-						} else {
-							echo "<h5>-</h5>";
-						}
-						echo "
-						</div>
-						</div>
-					</button>
-				 </form>
-				 </div>
-		     ";
+<?php
+$sql = "select * from item order by name";
+
+if($stmt = $pdo->prepare($sql)){
+	if($stmt->execute()){
+		if($stmt->rowCount() > 0){
+			foreach($stmt as $row) {
+				$prod_image_path = './resources/images/'.$row['img_url'];
+				echo "
+<form method='post' action='product.php'>
+	<input type='hidden' name='data' value='".serialize($row)."' />
+	<button class='box'>
+			<div class='prod-img' style='background-image: url(".$prod_image_path.");'></div>
+			<div style='padding-top: 15px;'>
+				<h4>".$row["brand"]." ".$row["name"]."</h4>
+				<h5 style='padding-top: 10px;'>
+			";
+				if ($row['size']) {
+					echo $row['size']."&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
+			echo "$".$row['price']."</h5>
+			</div>
+	</button>
+</form>
+					 ";
+			}
+			unset($row);
+		} else {
+			echo "<p>No products to show...</p>";
+		}
 	}
-	unset($row);
-
-	echo "<a href='newProduct.php'><div class='box'><button>
-			<div class='prod-cont'>
-			<div>
-			<img class='plus' src='./resources/images/plus-icon3.png'>
-			</div>
-			<div>
-			<h4>Add Product</h4>
-			<h5>&nbsp;</h5>
-			</div>
-			</div>
-			</button></div>
-			</a>
-		</div>";
+	unset($stmt);
 }
-
-$dbh = null;
-
+unset($pdo);
 ?>
 
-<a href='logout.php'><h5>Log out</h5></a>
+
+</div>
 </body>
 </html>
 

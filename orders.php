@@ -40,6 +40,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <a class='item-off' href='sales.php'>
 		<h3>Sales</h3>
 </a>
+<div id='user-info'>
+	<div>
+		<img style='width: 25px;' src='resources/images/user-icon2.png'/>
+		<h2>
+		<?php 
+		session_start();
+		echo htmlspecialchars($_SESSION['username']);
+		?>
+		</h2>
+	</div>
+
+	<div>
+	<a href='logout.php' style='float: right;'>
+		<h5 style='color:white;'>Log out</h5>
+	</a>
+	</div>
+</div>
+
 </div>
 
 <?php 

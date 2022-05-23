@@ -38,9 +38,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         if ($_POST['data']){
             $data = unserialize($_POST['data']);
             $ID = $data['ID'];
+            $brand = $data['brand'];
             $name = $data['name'];
             $description = $data['description'];
             $size = $data['size'];
+            $price = $data['price'];
             $target_name = $data['img_url'];
         } 
         $target_dir = "resources/images/";
@@ -92,10 +94,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </tr>
                 <tr>
                     <td>
+                        Brand (optional):
+                    </td>
+                    <td>
+                        <input type='text' name='prod-brand' value='<?php echo $brand; ?>'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         Size (optional):
                     </td>
                     <td>
                         <input type='text' name='prod-size' value='<?php echo $size; ?>'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Price <span style='color: red'>*</span>:
+                    </td>
+                    <td>
+                        <input type='number' name='prod-price' step='0.01' value='<?php echo $price; ?>'>
                     </td>
                 </tr>
                 <tr>
