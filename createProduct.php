@@ -31,28 +31,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
 </a>
 
-<?php if($_SERVER["REQUEST_METHOD"] == "POST"){ ?>
 <div class='prod-wrap'>
-    
     <div>
         <?php
         $target_dir = "resources/images/";
         $name_err = $price_err = "";
-        //first time accessing page
-        if (isset($_POST['data'])) {
-            $data = unserialize($_POST['data']);
-            $ID = $data['ID'];
-            $brand = $data['brand'];
-            $name = $data['name'];
-            $description = $data['description'];
-            $size = $data['size'];
-            $price = $data['price'];
-            $target_name = $data['img_url'];
-            $target_file = $target_dir . $target_name;
-        } //new product image was uploaded 
-        else if (isset($_POST["upload_image"])) {
+
+        if($_SERVER["REQUEST_METHOD"] == "POST"){ //not first time on page
             //get fields from previous form
-            $ID = $_POST['ID'];
             $brand = $_POST['prod-brand'];
             $name = $_POST['prod-name'];
             $description = $_POST['prod-desc'];
@@ -60,51 +46,47 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $price = $_POST['prod-price'];
             $target_name = $_POST['prod-img'];
             $target_file = $target_dir . $target_name;
-            // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
-                $target_name = basename($_FILES["fileToUpload"]["name"]);
-                $target_file = $target_dir . $target_name;
-                move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-            } else {  
-                // Check file size
-                if ($_FILES["fileToUpload"]["size"] > 5000000) {
-                    echo "Sorry, image exceeds max size of 5 Mb.";
-                } else {
-                    echo "Sorry, there was an error uploading your image.";
+            if (isset($_POST["upload_image"])){ //image was uploaded
+
+                // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                if($check !== false) {
+                    $target_name = basename($_FILES["fileToUpload"]["name"]);
+                    $target_file = $target_dir . $target_name;
+                    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+                } else {  
+                    // Check file size
+                    if ($_FILES["fileToUpload"]["size"] > 5000000) {
+                        echo "Sorry, image exceeds max size of 5 Mb.";
+                    } else {
+                        echo "Sorry, there was an error uploading your image.";
+                    }
+                }
+            } else { //update button was pressed, should attempt to create product
+                if (empty(trim($name))){
+                    $name_err = "Product name required.";
+                }
+                if (empty(trim($price))){
+                    $price_err = "Product price required.";
+                }
+    
+                if(empty($name_err) && empty($price_err)){
+                    //required fields satisfied, redirect to result page
+                    ?>
+                <form id='createForm' action='createProductResult.php' method='post'>
+                    <input type='hidden' name='prod-data' value='<?php echo serialize($_POST)?>'>     
+                </form>
+                <script>
+                    document.getElementById("createForm").submit();
+                </script>
+                    <?php 
                 }
             }
-        } else {//update button is clicked, should attempt to update product
-            if(empty(trim($_POST["prod-name"]))){
-                $name_err = "Product name required.";
-            }
-            if(empty(trim($_POST["prod-price"]))){
-                $price_err = "Product price required.";
-            }
-
-            if(empty($name_err) && empty($price_err)){
-                //required fields satisfied, redirect to result page
-                ?>
-            <form id='updateForm' action='updateProductResult.php' method='post'>
-                <input type='hidden' name='prod-data' value='<?php echo serialize($_POST)?>'>     
-            </form>
-            <script>
-                document.getElementById("updateForm").submit();
-            </script>
-                <?php
-            } else {
-                //show form again with error messages
-                $ID = $_POST['ID'];
-                $brand = $_POST['prod-brand'];
-                $name = $_POST['prod-name'];
-                $description = $_POST['prod-desc'];
-                $size = $_POST['prod-size'];
-                $price = $_POST['prod-price'];
-                $target_name = $_POST['prod-img'];
-                $target_file = $target_dir . $target_name;
-            }
-
+        } else { //first time on page, use all defaults
+            $target_name = 'default-product.jpg';
+            $target_file = $target_dir . $target_name;
         }
+    
         echo "<img class='product' src='".$target_file."'>"; ?>
         <form action='' method='post' enctype='multipart/form-data'> 
             <h5>Select a product image:</h5>
@@ -165,25 +147,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </tr>
                 </table>
                 <input type='hidden' name='prod-img' value='<?php echo $target_name;?>'>
-                <input type='hidden' name='ID' value='<?php echo $ID;?>'>
                 <a href='./products.php'>
                     <div class='cancel'>
                         <h4>Cancel</h4>
                     </div>
                 </a>
-                <input class='complete' type='submit' value='Update' name='update'>
+                <input class='complete' type='submit' value='Create' name='create'>
             
             </div>
         </form>
     </div>
-<?php } else {
-    echo "<h4>Data error...</h4>"; ?>
-    <a href='./products.php'>
-	<div class='home'>
-		<h4>Back to Products</h4>
-	</div>
-    </a>
-<?php } ?>
-
 </body>
 </html>

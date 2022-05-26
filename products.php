@@ -65,7 +65,7 @@ require_once "config.php";
 </div>
 <div class="wrapper">
 
-<a href='newProduct.php'>
+<a href='createProduct.php'>
 	<button class='add'>
 	<div class='prod-img' style='background-image: url(./resources/images/plus-icon3.png);'></div>
 	</button>

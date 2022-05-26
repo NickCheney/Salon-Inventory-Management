@@ -72,7 +72,7 @@ table, th, td {
 .header .item-on, .header .item-off {
 	padding: 15px;
 	float: left;
-	height: 
+	/**height needed?*/
 }
 
 .header .item-on {
@@ -247,6 +247,13 @@ a {
 
 .text-input * {
 	vertical-align: top;
+}
+
+.text-input .prod-err {
+	background-color: rgb(255, 194, 194);
+	padding: 5px;
+	border: 1px solid red;
+	font-size: 75%;
 }
 
 input, textarea {

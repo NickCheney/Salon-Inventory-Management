@@ -38,12 +38,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <h5>(This will delete all associated order data for this product)</h5>
         </div>
         <div>
-        <form id='del-con' method='post' action='result.php'>
-            <input type='hidden' name='atype' value='delete' />
-            <input type='hidden' name='data' value='".serialize($data)."' />
+        <form id='del-con' method='post' action='deleteProductResult.php'>
+            <input type='hidden' name='prod-data' value='".serialize($data)."' />
             <input class='complete' type='submit' value='Confirm'>
         </form>
-        <a onclick='history.go(-1)'><div class='home'>
+        <a href='./products.php'><div class='home'>
         <h4>Cancel</h4></div></a>
         </div>
         </div>";
