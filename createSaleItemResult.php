@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt->bindParam(":I_ID", $I_ID, PDO::PARAM_INT);
 		$stmt->bindParam(":S_ID", $S_ID, PDO::PARAM_INT);
         $stmt->bindParam(":quantity", $quantity, PDO::PARAM_INT);
-        $stmt->bindParam(":unit_price", $unit_price, PDO::PARAM_INT);
+        $stmt->bindParam(":unit_price", $unit_price, PDO::PARAM_STR);
 
         try {
             $stmt->execute();

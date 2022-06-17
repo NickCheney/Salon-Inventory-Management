@@ -75,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt->bindParam(":name", $name, PDO::PARAM_STR);
         $stmt->bindParam(":description", $description, PDO::PARAM_STR);
         $stmt->bindParam(":size", $size, PDO::PARAM_STR);
-        $stmt->bindParam(":price", $price, PDO::PARAM_INT);
+        $stmt->bindParam(":price", $price, PDO::PARAM_STR);
         $stmt->bindParam(":brand", $brand, PDO::PARAM_STR);
         $stmt->bindParam(":img_url", $img_url, PDO::PARAM_STR);
         $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);

@@ -43,14 +43,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$data = unserialize($_POST['data']);
     $item_name = $item_info['name'];
     $sql = "insert into buys values (:I_ID, :O_ID, :quantity, :unit_price)";
-    
     if($stmt = $pdo->prepare($sql)){
         
         // Bind variables to the prepared statement as parameters
         $stmt->bindParam(":I_ID", $I_ID, PDO::PARAM_INT);
 		$stmt->bindParam(":O_ID", $O_ID, PDO::PARAM_INT);
         $stmt->bindParam(":quantity", $quantity, PDO::PARAM_INT);
-        $stmt->bindParam(":unit_price", $unit_price, PDO::PARAM_INT);
+        $stmt->bindParam(":unit_price", $unit_price, PDO::PARAM_STR);
 
         try {
             $stmt->execute();
