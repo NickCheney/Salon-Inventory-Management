@@ -107,8 +107,6 @@ if($stmt = $pdo->prepare($sql)){
 			<?php
 			}
 			unset($row);
-		} else {
-			echo "<p>No orders to show...</p>";
 		}
 	}
 	unset($stmt);

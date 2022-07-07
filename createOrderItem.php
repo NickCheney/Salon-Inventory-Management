@@ -50,13 +50,21 @@ require_once "config.php";
                     <td>
                         <select name="item_info" required>
                             <?php 
-                                $sql = "select * from item";
+                                $sql = "select * from item order by brand, name";
                                 if($stmt = $pdo->prepare($sql)){
                                     if ($stmt->execute()){
                                         if($stmt->rowCount() > 0){
                                             foreach($stmt as $row) {
+                                                $option = "";
+                                                if ($row['brand']){
+                                                    $option .= $row['brand']." ";
+                                                }
+                                                $option .= $row['name'];
 
-                                                echo "<option value='".serialize($row)."'>".$row['name']." - ".$row['size']."</option>";
+                                                if ($row['size']){
+                                                    $option .= " - ".$row['size'];
+                                                }
+                                                echo "<option value='".serialize($row)."'>".$option."</option>";
                                             }
                                         }
                                     }
