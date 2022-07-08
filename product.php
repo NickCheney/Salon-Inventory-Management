@@ -36,9 +36,9 @@ require_once "config.php";
 if ($_POST['data']) {
 	$data = unserialize($_POST['data']);
 	$in_stock = 0;
-	$sql = "select b - s as ist from (select sum(quantity) as b from buys where I_ID = " .
-			":ID group by I_ID) as bt,  (select sum(quantity) as s from sells where I_ID" .
-			" = :ID group by I_ID) as sd";
+	$sql = "select b - s as ist from (select coalesce(sum(quantity),0) as b from buys where I_ID = " .
+			":ID) as bt, (select coalesce(sum(quantity),0) as s from sells where I_ID" .
+			" = :ID) as sd";
 
 	if($stmt = $pdo->prepare($sql)){
 		// Bind variables to the prepared statement as parameters
