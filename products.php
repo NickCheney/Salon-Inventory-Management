@@ -72,7 +72,7 @@ require_once "config.php";
 </a>
 
 <?php
-$sql = "select * from item order by name";
+$sql = "select * from item order by brand, name";
 
 if($stmt = $pdo->prepare($sql)){
 	if($stmt->execute()){
