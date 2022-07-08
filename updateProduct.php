@@ -63,7 +63,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             // Check if image file is a actual image or fake image
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
-                $target_name = basename($_FILES["fileToUpload"]["name"]);
+                $target_name = $ID . "_" . str_replace(" ","_",basename($_FILES["fileToUpload"]["name"]));
                 $target_file = $target_dir . $target_name;
                 move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
             } else {  
