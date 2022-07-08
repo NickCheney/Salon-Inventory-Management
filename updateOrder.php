@@ -141,6 +141,7 @@ require_once "config.php";
 
 <div class='order-prodlist-wrapper'>
     <div class='order-prodlist-edit-header'>
+		<span><h4>Brand</h4></span>
         <span><h4>Product</h4></span>
         <span><h4>Size</h4></span>
         <span><h4>Quantity</h4></span>
@@ -161,6 +162,7 @@ if ($stmt = $pdo->prepare($sql)){
                 foreach ($stmt as $row) { 
                 ?>
                 <div class = 'order-prodlist-edit-box'>
+					<span><?php echo $row['brand']?></span>
                     <span><?php echo $row['name']?></span>
                     <span><?php echo $row['size']?></span>
                     <span><?php echo $row['quantity']?></span>

@@ -200,7 +200,7 @@ table, th, td {
 .order-prodlist-header {
 	padding: 5px;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 	background-color: black;
 	color: white;
 }
@@ -209,7 +209,7 @@ table, th, td {
 	padding: 15px;
 	background-color: white;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 	width: 100%;
 	justify-items: left;
 	font-size:75%;
