@@ -56,6 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     $price = $prod_data['prod-price'];
+    $qnt_adj_dlta = $prod_data['prod-qnty'] - $prod_data['prod-old-qnty'];
 
     if ($prod_data['prod-desc']){
         $description = trim($prod_data['prod-desc']);
@@ -67,7 +68,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $sql = "UPDATE item SET name = :name, description = :description, 
         size = :size, price = :price, brand = :brand, 
-        img_url = :img_url where ID = :ID";
+        img_url = :img_url, quantity_adjust = quantity_adjust + :qnt_adj_dlta 
+        where ID = :ID";
     
     if($stmt = $pdo->prepare($sql)){
         
@@ -78,6 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt->bindParam(":price", $price, PDO::PARAM_STR);
         $stmt->bindParam(":brand", $brand, PDO::PARAM_STR);
         $stmt->bindParam(":img_url", $img_url, PDO::PARAM_STR);
+        $stmt->bindParam(":qnt_adj_dlta", $qnt_adj_dlta, PDO::PARAM_STR);
         $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
   
         try {

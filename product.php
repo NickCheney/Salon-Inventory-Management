@@ -36,9 +36,9 @@ require_once "config.php";
 if ($_POST['data']) {
 	$data = unserialize($_POST['data']);
 	$in_stock = 0;
-	$sql = "select b - s as ist from (select coalesce(sum(quantity),0) as b from buys where I_ID = " .
+	$sql = "select b - s + a as ist from (select coalesce(sum(quantity),0) as b from buys where I_ID = " .
 			":ID) as bt, (select coalesce(sum(quantity),0) as s from sells where I_ID" .
-			" = :ID) as sd";
+			" = :ID) as sd, (select quantity_adjust as a from item where ID = :ID) as ma";
 
 	if($stmt = $pdo->prepare($sql)){
 		// Bind variables to the prepared statement as parameters
@@ -56,6 +56,7 @@ if ($_POST['data']) {
 		unset($stmt);
 	}
 	$pdo = null;
+	$data['quantity'] = $in_stock;
 	echo "<div class='prod-wrap'>
 	<div>
 		<img class='product' src='./resources/images/".$data['img_url']."'>
@@ -64,7 +65,7 @@ if ($_POST['data']) {
 		<h3>".$data['brand']." ".$data['name']."</h3>
 		<h4>".$data['size']."</h4>
 		<h4>$".$data['price']."</h4>
-		<h4>".$in_stock." in stock</h4>
+		<h4>".$data['quantity']." in stock</h4>
 		<br/>
 		<h2>".$data['description']."</h2>
 	</div>

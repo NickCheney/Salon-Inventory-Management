@@ -35,7 +35,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div>
         <?php
         $target_dir = "resources/images/";
-        $name_err = $price_err = "";
+        $name_err = $price_err = $quantity_err = "";
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){ //not first time on page
             //get fields from previous form
@@ -44,6 +44,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $description = $_POST['prod-desc'];
             $size = $_POST['prod-size'];
             $price = $_POST['prod-price'];
+            $quantity = $_POST['prod-qnty'];
             $target_name = $_POST['prod-img'];
             $target_file = $target_dir . $target_name;
             if (isset($_POST["upload_image"])){ //image was uploaded
@@ -69,8 +70,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 if (empty(trim($price))){
                     $price_err = "Product price required.";
                 }
+                if (empty(trim($quantity))){
+                    $quantity_err = "Product quantity required.";
+                }
     
-                if(empty($name_err) && empty($price_err)){
+                if(empty($name_err) && empty($price_err) && empty($quantity_err)){
                     //required fields satisfied, redirect to result page
                     ?>
                 <form id='createForm' action='createProductResult.php' method='post'>
@@ -135,6 +139,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </td>
                         <td>
                             <input type='number' name='prod-price' step='0.01' value='<?php echo $price; ?>'>
+                        </td>
+                    </tr>
+                    <?php 
+                    if (!empty($quantity_err)) {
+                        echo '<tr><td><span class="prod-err">'.$quantity_err.'</span></td></tr>';
+                    } ?>
+                    <tr>
+                        <td>
+                            Quantity <span style='color: red'>*</span>:
+                        </td>
+                        <td>
+                            <input type='number' name='prod-qnty' step='1' value='<?php echo $quantity; ?>'>
                         </td>
                     </tr>
                     <tr>

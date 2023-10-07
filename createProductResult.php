@@ -54,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     $price = $prod_data['prod-price'];
+    $quantity = $prod_data['prod-qnty'];
 
     if ($prod_data['prod-desc']){
         $description = trim($prod_data['prod-desc']);
@@ -64,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $img_url = trim($prod_data['prod-img']);
 
     $sql = "insert into item values (null, :name, :description,
-             :size, :price, :brand, :img_url)";
+             :size, :price, :brand, :img_url, :quantity)";
     
     if($stmt = $pdo->prepare($sql)){
         
@@ -73,6 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $stmt->bindParam(":description", $description, PDO::PARAM_STR);
         $stmt->bindParam(":size", $size, PDO::PARAM_STR);
         $stmt->bindParam(":price", $price, PDO::PARAM_STR);
+        $stmt->bindParam(":quantity", $quantity, PDO::PARAM_STR);
         $stmt->bindParam(":brand", $brand, PDO::PARAM_STR);
         $stmt->bindParam(":img_url", $img_url, PDO::PARAM_STR);
  

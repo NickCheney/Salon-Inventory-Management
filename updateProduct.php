@@ -47,8 +47,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $description = $data['description'];
             $size = $data['size'];
             $price = $data['price'];
+            $quantity = $data['quantity'];
             $target_name = $data['img_url'];
             $target_file = $target_dir . $target_name;
+            $old_quantity = $quantity;
         } //new product image was uploaded 
         else if (isset($_POST["upload_image"])) {
             //get fields from previous form
@@ -58,8 +60,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $description = $_POST['prod-desc'];
             $size = $_POST['prod-size'];
             $price = $_POST['prod-price'];
+            $quantity = $data['prod-qnty'];
             $target_name = $_POST['prod-img'];
             $target_file = $target_dir . $target_name;
+            $old_quantity = $_POST['prod-old-qnty'];
             // Check if image file is a actual image or fake image
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
@@ -81,8 +85,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             if(empty(trim($_POST["prod-price"]))){
                 $price_err = "Product price required.";
             }
+            if(empty(trim($_POST["prod-qnty"]))){
+                $quantity_err = "Product quantity required.";
+            }
 
-            if(empty($name_err) && empty($price_err)){
+            if(empty($name_err) && empty($price_err) && empty($quantity_err)){
                 //required fields satisfied, redirect to result page
                 ?>
             <form id='updateForm' action='updateProductResult.php' method='post'>
@@ -100,8 +107,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 $description = $_POST['prod-desc'];
                 $size = $_POST['prod-size'];
                 $price = $_POST['prod-price'];
+                $quantity = $_POST['prod-qnty'];
                 $target_name = $_POST['prod-img'];
                 $target_file = $target_dir . $target_name;
+                $old_quantity = $_POST['prod-old-qnty'];
             }
 
         }
@@ -155,6 +164,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <input type='number' name='prod-price' step='0.01' value='<?php echo $price; ?>'>
                         </td>
                     </tr>
+                    <?php 
+                    if (!empty($quantity_err)) {
+                        echo '<tr><td><span class="prod-err">'.$quantity_err.'</span></td></tr>';
+                    } ?>
+                    <tr>
+                        <td>
+                            Quantity <span style='color: red'>*</span>:
+                        </td>
+                        <td>
+                            <input type='number' name='prod-qnty' step='1' value='<?php echo $quantity; ?>'>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             Description (optional):
@@ -166,6 +187,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </table>
                 <input type='hidden' name='prod-img' value='<?php echo $target_name;?>'>
                 <input type='hidden' name='ID' value='<?php echo $ID;?>'>
+                <input type='hidden' name='prod-old-qnty' value='<?php echo $old_quantity;?>'>
                 <a href='./products.php'>
                     <div class='cancel'>
                         <h4>Cancel</h4>
