@@ -85,7 +85,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             if(empty(trim($_POST["prod-price"]))){
                 $price_err = "Product price required.";
             }
-            if(empty(trim($_POST["prod-qnty"]))){
+            if($_POST["prod-qnty"] == ""){
                 $quantity_err = "Product quantity required.";
             }
 
