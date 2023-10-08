@@ -78,7 +78,7 @@ if($stmt = $pdo->prepare($sql)){
 	if($stmt->execute()){
 		if($stmt->rowCount() > 0){
 			foreach($stmt as $row) {
-				$prod_image_path = './resources/images/'.$row['img_url'];
+				$prod_image_path = '"./resources/images/'.$row['img_url'].'"';
 				echo "
 <form method='post' action='product.php'>
 	<input type='hidden' name='data' value='".serialize($row)."' />
