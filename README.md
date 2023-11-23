@@ -26,7 +26,7 @@ Though the web app doesn't contain any highly sensitive data, I added mimimal se
 ## Lessons learned
 - Though appearing to be the path of least resistance, iteratively building a web app using native PHP can get messy and to a less readable codebase without refactoring. In the future I'd want to try a framework such as Laravel to increase code reusability and easily manage security.
 - Also in efforts to streamline development, I used minimal JavaScript, leading to more complicated POST logic and extra confirmation pages. Adding a few snippets would have made the site more dynamic adding to the user experience.
-# Next Steps
+## Next Steps
 - Though deploying on a Raspberry Pi hasn't caused any issues so far, I'm looking to revamp the app with a containerized instance on a Cloud provider to ensure more reliability and resiliancy in case of a hardware issue.
 - By redesigning the front end with a Javascript framework such as React, the webpage could include more sophisticated UI interactions, especially when handling data field edits and displaying item, order and sale lists.
 - At the same time, redoing the backend as an isolated service would allow for experimentation with a Serverless framework and a clearer understanding of client-server architecture.
