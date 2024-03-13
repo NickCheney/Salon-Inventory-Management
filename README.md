@@ -7,6 +7,7 @@ This project was inspired by the final deliverable of an [Into to Database Manag
 ## Design
 User requirements specified the app would need CRUD operations for hair products, orders and sales of said products. Translating an initial entity-relationship diagram to a relational schema, I was left with this:
 <img src="resources/db/inventory-schema.png">
+
 As a student with limited experience with cloud serving solutions and a pre-owned Raspberry Pi board without enough RAM for Mincecraft server hosting, I followed [this handy guide](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04) to set up Apache HTTP server, MariaDB (MySQL Fork) and PHP. With some port-forwarding and a cheap DNS, the Fringe Hair Salon Inventory Management System went live!
 
 ## Appearance 
